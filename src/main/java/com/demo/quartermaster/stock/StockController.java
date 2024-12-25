@@ -18,7 +18,7 @@ public class StockController {
     public Long addProduct() {
         Product wheat = new Product("Wheat", new WeightUnit(10));
 
-        return 3L;
+        return 4L;
     }
 
 
