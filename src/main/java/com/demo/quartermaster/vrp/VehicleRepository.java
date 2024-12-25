@@ -7,7 +7,7 @@ public class VehicleRepository {
     }
 
     public int getVehicleCapacity() {
-        return 100;
+        return 80;
     }
 
 }

@@ -1,7 +1,9 @@
 package com.demo.quartermaster.vrp;
-
 import com.google.ortools.Loader;
 import com.google.ortools.constraintsolver.*;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class VRPSolution {
@@ -63,13 +65,14 @@ public class VRPSolution {
                         .setFirstSolutionStrategy(FirstSolutionStrategy.Value.PATH_CHEAPEST_ARC)
                         .setLocalSearchMetaheuristic(LocalSearchMetaheuristic.Value.GUIDED_LOCAL_SEARCH)
                         .setTimeLimit(com.google.protobuf.Duration.newBuilder().setSeconds(120).build())
-                        .setSolutionLimit(500)
+                        .setSolutionLimit(100)
                         .build();
 
         Assignment solution = routing.solveWithParameters(searchParameters);
 
         if (solution != null) {
             printSolution(solution);
+            generateSvgOutput(solution);
         } else {
             System.out.println("No solution found.");
         }
@@ -92,6 +95,32 @@ public class VRPSolution {
             totalDistance += routeDistance;
         }
         System.out.printf("Total distance of all routes: %s\n", totalDistance / 100.0);
+    }
+
+    private void generateSvgOutput(Assignment solution) {
+        List<Integer>[] routes = new List[vehicleRepo.getVehicleCount()];
+        for (int i = 0; i < routes.length; i++) {
+            routes[i] = new ArrayList<>();
+            long index = routing.start(i);
+            while (!routing.isEnd(index)) {
+                routes[i].add(manager.indexToNode(index));
+                index = solution.value(routing.nextVar(index));
+            }
+        }
+
+        VRPSvgGenerator generator = new VRPSvgGenerator();
+        String svg = generator.generateSvg(
+                distances.distanceMatrix,
+                distances.demands,
+                new VRPSvgGenerator.Solution(routes)
+        );
+
+        // Write to file
+        try (PrintWriter out = new PrintWriter("vrp_solution.svg")) {
+            out.println(svg);
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not write SVG file: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
