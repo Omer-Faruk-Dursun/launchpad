@@ -1,4 +1,4 @@
-package com.tchefs.quartermaster;
+package com.demo.quartermaster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
