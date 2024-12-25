@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockController {
 
     @GetMapping("/stock/product")
-    public String getStock() {
-        // Creating different products
-        Product wheat = new Product("Wheat", new WeightUnit(10)); // 10 kg of Wheat
+    public Product getStock() {
+        Product wheat = new Product("Wheat", new WeightUnit(10));
 
-        return wheat.toString();
+        return wheat;
     }
 
 }
