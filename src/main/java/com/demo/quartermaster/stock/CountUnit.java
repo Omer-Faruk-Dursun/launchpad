@@ -1,4 +1,4 @@
-package com.tchefs.quartermaster.stock;
+package com.demo.quartermaster.stock;
 
 public class CountUnit implements Unit {
     private int quantity;

@@ -1,4 +1,4 @@
-package com.tchefs.quartermaster;
+package com.demo.quartermaster;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
