@@ -1,10 +1,10 @@
-package com.demo.quartermaster;
+package com.demo.launchpad;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class QuartermasterApplicationTests {
+class LaunchPadApplicationTests {
 
 	@Test
 	void contextLoads() {

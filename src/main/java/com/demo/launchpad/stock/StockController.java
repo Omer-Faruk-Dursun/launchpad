@@ -1,4 +1,4 @@
-package com.demo.quartermaster.stock;
+package com.demo.launchpad.stock;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,14 +9,14 @@ public class StockController {
 
     @GetMapping("/stock/product")
     public Product getProduct() {
-        Product wheat = new Product("Wheat", new WeightUnit(10));
+        Product bar = new Product("Bar");
 
-        return wheat;
+        return bar;
     }
 
     @PostMapping("/stock/product")
     public Long addProduct() {
-        Product wheat = new Product("Wheat", new WeightUnit(10));
+        Product foo = new Product("Foo");
 
         return 4L;
     }
