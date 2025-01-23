@@ -24,6 +24,12 @@ public class User {
     @Column(name = "USER_NAME", unique = true)
     private String username;
 
+    @Column(name = "FIRST_NAME")
+    private String firstname;
+
+    @Column(name = "LAST_NAME")
+    private String lastname;
+
     @Column(name = "EMAIL", unique = true)
     private String email;
 

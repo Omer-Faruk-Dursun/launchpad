@@ -28,17 +28,20 @@ public class JwtManager {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(UserDetails principal) {
+    public String generateToken(CustomUserDetails principal) {
         Map<String, Object> claims = new HashMap<>();
         Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
         claims.put("roles", authorities.stream().map(GrantedAuthority::getAuthority).toList());
+        claims.put("firstname", principal.getFirstname());
+        claims.put("lastname", principal.getLastname());
+
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuer("quartermaster")
-                .setSubject(principal.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + lifespan))
+                .claims(claims)
+                .issuer("quartermaster")
+                .subject(principal.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + lifespan))
                 .signWith(generateSecretKey())
                 .compact();
     }

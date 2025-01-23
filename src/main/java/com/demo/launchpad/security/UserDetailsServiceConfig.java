@@ -17,14 +17,19 @@ public class UserDetailsServiceConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return username -> {
-            User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-            List<SimpleGrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).toList();
+            List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+                    .toList();
 
-            return new org.springframework.security.core.userdetails.User(
+            return new CustomUserDetails(
                     user.getUsername(),
                     user.getPassword(),
-                    authorities
+                    authorities,
+                    user.getFirstname(),
+                    user.getLastname()
             );
         };
     }
